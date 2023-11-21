@@ -1,0 +1,11 @@
+<mat-card >
+  <mat-card-header>
+    <mat-card-title>
+      Booking : {{booking.bookingId}}
+    </mat-card-title>
+    <mat-card-subtitle>{{booking.guestName | uppercase}} + {{booking.guestList.length}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>{{booking.checkinDate | date }} - {{booking.checkoutDate | date }}</mat-card-content>
+  <mat-card-content>{{booking.bookingStatus}} </mat-card-content>
+  <mat-card-content>{{booking.guestAddress.city}}</mat-card-content>
+</mat-card>
