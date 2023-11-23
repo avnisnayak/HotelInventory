@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.angular",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\login"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\app\\login",
+  "SelectedNode": "\\src",
   "PreviewInSolutionExplorer": false
 }

@@ -1,13 +1,24 @@
-<mat-card>
+<mat-card [ngClass]="isDisabled ? 'card-selected' : ''">
   <mat-card-header>
     <mat-card-title>
-      Room : {{room.roomNumber}} - {{room.roomType}}
+      Room : {{ room.roomNumber }} - {{ room.roomType }}
     </mat-card-title>
-    <mat-card-subtitle>{{room.roomType| uppercase}}</mat-card-subtitle>
+    <mat-card-subtitle>{{ room.roomType | uppercase }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>Price : {{room.price | currency : 'EUR' }}/night</mat-card-content>
-  <mat-card-content>{{room.amenities}} </mat-card-content>
-  <mat-card-content>Rating : {{room.rating}}/5</mat-card-content>
-  <mat-card-content><button mat-raised-button color="primary" type="button"
-      (click)="selectRoom(room)">Book</button></mat-card-content>
+  <mat-card-content
+    >Price : {{ room.price | currency : "EUR" }}/night</mat-card-content
+  >
+  <mat-card-content>{{ room.amenities }} </mat-card-content>
+  <mat-card-content>Rating : {{ room.rating }}/5</mat-card-content>
+  <mat-card-content
+    ><button
+      [disabled]="isDisabled"
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="selectRoom(room)"
+    >
+      Book
+    </button></mat-card-content
+  >
 </mat-card>

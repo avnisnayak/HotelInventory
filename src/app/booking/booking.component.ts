@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -34,12 +35,14 @@ import { RoomDetails } from '../rooms/rooms';
   selector: 'hinv-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookingComponent implements OnInit {
+export class BookingComponent implements OnInit, OnChanges {
   @Input() selectRoom!: RoomDetails;
   bookingForm!: FormGroup;
   filteredOptions!: Observable<string[]>;
   options: string[] = ['Reserved', 'Booked', 'Cancelled'];
+  loading: boolean = true;
 
   get guestList() {
     return this.bookingForm.get('guestList') as FormArray;
@@ -53,70 +56,11 @@ export class BookingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.bookingForm = this.formBuilder.group(
-      {
-        // use either syntax
-        // roomId: new FormControl(
-        //   { disabled: true },
-        //   { validators: [Validators.required] }
-        // ),
-        roomId: new FormControl(
-          { value: this.selectRoom.roomNumber, disabled: true },
-          {
-            // updateOn: 'blur',
-            validators: [Validators.required],
-          }
-        ),
-        guestEmail: new FormControl('', {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.email],
-        }),
-        checkinDate: new FormControl('', {
-          validators: [Validators.required],
-        }),
-        checkoutDate: new FormControl('', {
-          validators: [Validators.required],
-        }),
-        bookingStatus: new FormControl('', {
-          validators: [Validators.required],
-        }),
-        bookingAmount: new FormControl('', {
-          validators: [Validators.required],
-        }),
-        bookingDate: new FormControl(''),
-        mobileNumber: new FormControl('', { updateOn: 'blur' }),
-        guestName: new FormControl('', {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.minLength(5)],
-        }),
-        guestAddress: this.formBuilder.group({
-          addressLine1: new FormControl('', {
-            validators: [Validators.required, Validators.minLength(5)],
-          }),
-          addressLine2: new FormControl(''),
-          // addressLine3: new FormControl(''),
-          city: new FormControl('', {
-            validators: [Validators.required],
-          }),
-          state: new FormControl('', {
-            validators: [Validators.required],
-          }),
-          country: new FormControl('', {
-            validators: [Validators.required],
-          }),
-          zipCode: new FormControl('', {
-            validators: [Validators.required],
-          }),
-        }),
-        // guestCount: new FormControl(''),
-        guestList: this.formBuilder.array([this.addGuestControl()], {
-          validators: [Validators.minLength(1), Validators.maxLength(4)],
-        }),
-      },
-      { updateOn: 'blur', validators: Validators.required }
-    );
-
+    // window.setTimeout(() => {
+    this.initBookingForm();
     this.bookingForm.patchValue(this.getDefaultBookingData());
+    //   this.loading = false;
+    // }, 4000);
     // this.bookingForm.valueChanges.subscribe((data) => {
     //   console.log(data);
     //   this.bookingService.bookRoom(data).subscribe((data) => {});
@@ -137,6 +81,82 @@ export class BookingComponent implements OnInit {
       startWith(''),
       map((value) => this.filter(value || ''))
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // this.loading = true;
+    // window.setTimeout(() => {
+    this.initBookingForm();
+    this.bookingForm.reset(this.getDefaultBookingData());
+    // this.loading = false;
+    // }, 4000);
+  }
+
+  initBookingForm() {
+    if (this.bookingForm == null) {
+      this.bookingForm = this.formBuilder.group(
+        {
+          // use either syntax
+          // roomId: new FormControl(
+          //   { disabled: true },
+          //   { validators: [Validators.required] }
+          // ),
+          roomId: new FormControl(
+            { value: this.selectRoom.roomNumber, disabled: true },
+            {
+              // updateOn: 'blur',
+              validators: [Validators.required],
+            }
+          ),
+          guestEmail: new FormControl('', {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.email],
+          }),
+          checkinDate: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          checkoutDate: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          bookingStatus: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          bookingAmount: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          bookingDate: new FormControl(''),
+          mobileNumber: new FormControl('', { updateOn: 'blur' }),
+          guestName: new FormControl('', {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.minLength(5)],
+          }),
+          guestAddress: this.formBuilder.group({
+            addressLine1: new FormControl('', {
+              validators: [Validators.required, Validators.minLength(5)],
+            }),
+            addressLine2: new FormControl(''),
+            // addressLine3: new FormControl(''),
+            city: new FormControl('', {
+              validators: [Validators.required],
+            }),
+            state: new FormControl('', {
+              validators: [Validators.required],
+            }),
+            country: new FormControl('', {
+              validators: [Validators.required],
+            }),
+            zipCode: new FormControl('', {
+              validators: [Validators.required],
+            }),
+          }),
+          // guestCount: new FormControl(''),
+          guestList: this.formBuilder.array([this.addGuestControl()], {
+            validators: [Validators.minLength(1), Validators.maxLength(4)],
+          }),
+        },
+        { updateOn: 'blur', validators: Validators.required }
+      );
+    }
   }
 
   private filter(value: string) {
@@ -210,15 +230,23 @@ export class BookingComponent implements OnInit {
     //   }
     // });
     // console.log(this.bookingForm.getRawValue());
+    // this.loading = true;
+    // window.setTimeout(() => {
     this.bookingService
       .bookRoom(this.bookingForm.getRawValue())
       .subscribe((data) => {
-        this.snackBar.open('Room added successfully!');
+        this.snackBar.open('Room added successfully!', '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
         this.bookingService.bookingAdded.next(data);
         this.bookingForm.markAsPristine();
         formDirective.resetForm();
         this.bookingForm.reset(this.getDefaultBookingData());
+        this.loading = true;
       });
+    // }, 4000);
 
     // this.bookingService
     //   .bookRoom(this.bookingForm.getRawValue())

@@ -18,6 +18,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RoomDetailComponent } from './room-detail/room-detail.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [BookingComponent, BookingDetailComponent, RoomDetailComponent],
@@ -37,6 +38,7 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
     MatGridListModule,
     MatAutocompleteModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     BookingComponent,

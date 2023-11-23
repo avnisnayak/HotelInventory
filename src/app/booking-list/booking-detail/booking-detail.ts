@@ -4,7 +4,6 @@
 //   bookedRooms: number;
 // }
 
-
 export interface Booking {
   bookingId: string;
   roomId: string;

@@ -17,7 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotFoundComponent } from './notFound/notFound.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './hover.directive';
 import { EmailvalidatorDirective } from './emailvalidator/emailvalidator.directive';
@@ -29,6 +29,9 @@ import {
 } from './services/routeConfig.service';
 import { BookingListComponent } from './booking-list/booking-list.component';
 import { BookingListModule } from './booking-list/booking-list.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -61,6 +64,10 @@ function initFactory(initService: InitService) {
     FormsModule,
     HeaderModule,
     BookingListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [
     {

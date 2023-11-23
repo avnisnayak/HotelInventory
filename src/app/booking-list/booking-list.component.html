@@ -2,16 +2,21 @@
   <!-- <div class="col1" *ngIf="bookingList$ | async as bookings"> -->
   <div class="col1" *ngIf="roomList as rooms">
     <!-- <h1>Booking list</h1> -->
-    <div class="block" *ngFor="let room of rooms; let i=index">
-      <hinv-room-detail [room]="room"></hinv-room-detail>
+    <div class="block" *ngFor="let room of rooms; let i = index">
+      <hinv-room-detail
+        [room]="room"
+        [isDisabled]="room.roomNumber == selectRoom.roomNumber"
+      ></hinv-room-detail>
     </div>
   </div>
   <!-- <h1>Booking form</h1> -->
-  <div class="col2"><hinv-booking *ngIf="selectRoom" [selectRoom]="selectRoom"></hinv-booking></div>
+  <div class="col2">
+    <hinv-booking *ngIf="selectRoom" [selectRoom]="selectRoom"></hinv-booking>
+  </div>
   <div class="col1" *ngIf="bookingList as bookings">
     <!-- <h1>Booking list</h1> -->
-    <div *ngFor="let booking of bookings; let i=index">
-      <hinv-booking-detail [booking]="booking"></hinv-booking-detail>
+    <div *ngFor="let booking of bookings; let i = index">
+      <hinv-booking-detail [booking]="booking" [isNew] ="newIndex == i+1 "></hinv-booking-detail>
     </div>
   </div>
 </div>

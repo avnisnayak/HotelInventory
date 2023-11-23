@@ -8,4 +8,5 @@ import { Booking } from './booking-detail';
 })
 export class BookingDetailComponent {
   @Input() booking!: Booking;
+  @Input() isNew: boolean = false;
 }

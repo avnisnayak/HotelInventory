@@ -1,3 +1,8 @@
+.example-loader {
+  justify-content: center;
+  display: flex;
+}
+
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -20,11 +25,11 @@
 }
 
 .example-option-action-buttons {
-  padding:10px 0px;
+  padding: 10px 0px;
 }
 
 .example-action-buttons {
-  padding:10px 0px;
+  padding: 10px 0px;
 }
 
 .example-headers-align .mat-expansion-panel-header-description {

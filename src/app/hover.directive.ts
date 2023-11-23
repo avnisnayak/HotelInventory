@@ -7,7 +7,6 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import { Inject } from '@nestjs/common';
 
 @Directive({
   selector: '[hinvHover]',

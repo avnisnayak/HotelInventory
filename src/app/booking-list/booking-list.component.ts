@@ -18,6 +18,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
   selectRoom!: RoomDetails;
+  newIndex: number = -1;
 
   constructor(private bookingService: BookingService) {}
 
@@ -38,6 +39,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
     this.bookingService.bookingAdded.subscribe((data: Booking) => {
       if (data) {
         this.bookingList = [...this.bookingList, data];
+        this.newIndex = this.bookingList.length;
       }
     });
 

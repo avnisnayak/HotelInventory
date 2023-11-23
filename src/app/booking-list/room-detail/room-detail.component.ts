@@ -9,6 +9,7 @@ import { RoomDetails } from '../../rooms/rooms';
 })
 export class RoomDetailComponent implements OnInit {
   @Input() room!: RoomDetails;
+  @Input() isDisabled: boolean = false;
 
   constructor(private bookingService: BookingService) {}
 
